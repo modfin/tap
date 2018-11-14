@@ -1,0 +1,1 @@
+SELECT * FROM tap_stoch(14, 3, 0, '2017-12-31'::DATE-30, '2017-12-31'::DATE);

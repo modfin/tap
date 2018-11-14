@@ -1,0 +1,1 @@
+SELECT * FROM tap_aroonosc(20, 0, '2017-12-31'::DATE-30, '2017-12-31'::DATE);

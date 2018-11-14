@@ -1,0 +1,1 @@
+SELECT * FROM tap_natr(14, 0, '2017-12-31'::DATE-30, '2017-12-31'::DATE);

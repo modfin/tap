@@ -191,3 +191,121 @@ func TestBBands(t *testing.T){
 	}
 
 }
+
+
+func TestTR(t *testing.T){
+	pricedata, err := GetPriceData(from, to)
+
+	if err != nil{
+		t.Error(err)
+		return
+	}
+	bands, err := GetTR(from, to)
+
+	if err != nil{
+		t.Error(err)
+		return
+	}
+	var closePrice []float64
+	var lowPrice []float64
+	var highPrice []float64
+
+	for _, p := range pricedata{
+		closePrice = append(closePrice, p.ClosePrice)
+		lowPrice = append(lowPrice, p.LowPrice)
+		highPrice = append(highPrice, p.HighPrice)
+	}
+
+
+	sampleOptions := []float64{}
+	sampleOutputs, err:= tulipindicators.Indicators["tr"](
+		[][]float64{highPrice, lowPrice, closePrice},
+		sampleOptions,
+	)
+
+	if err != nil{
+		t.Error(err)
+		return
+	}
+
+	for i := 0; i < 100; i++{
+		need := float32(sampleOutputs[0][i])
+
+		got := float32(bands[i].Float1)
+
+
+		if need != got {
+			fmt.Println(i, "Need", need, "\n   got", got)
+			t.Fail()
+		}
+
+
+	}
+
+
+
+
+}
+
+
+
+
+// TODO for some reason har to compute in refrence to wilder with offset
+//func TestWilders(t *testing.T){
+//	for interval:= 5; interval <= 6; interval++ {
+//		pricedata, err := GetPriceData(from, to)
+//
+//		if err != nil{
+//			t.Error(err)
+//			return
+//		}
+//
+//		if err != nil{
+//			t.Error(err)
+//			return
+//		}
+//		var closePrice []float64
+//
+//		for _, p := range pricedata{
+//			closePrice = append(closePrice, p.ClosePrice)
+//		}
+//
+//
+//		sampleOptions := []float64{float64(interval)}
+//		sampleOutputs, err:= tulipindicators.Indicators["wilders"](
+//			[][]float64{closePrice},
+//			sampleOptions,
+//		)
+//
+//		if err != nil{
+//			t.Error(err)
+//			return
+//		}
+//
+//
+//		whilders, err := GetWilders(interval, pricedata[interval].CloseDate, to)
+//
+//		for i := 0; i < 10; i++{
+//			smaI := sampleOutputs[0][i]
+//
+//			adjust := 0// interval+add - 1
+//
+//			smaP := whilders[i + adjust]
+//			p := closePrice[i+interval]
+//
+//			need :=  float32(smaI)
+//			got := float32(smaP.Float1)
+//
+//
+//			if need != got {
+//				fmt.Println(i, smaP.CloseDate.Format("2006-01-02"), "Need", need, ", got", got, ", for interval", interval, "price", p )
+//				t.Fail()
+//			}
+//
+//
+//		}
+//
+//
+//	}
+//
+//}

@@ -10,6 +10,24 @@ CREATE TABLE "_test_data" (
   num_of_trades int8,
   mcap float8
 );
+
+INSERT INTO "_test_data" (instrument_id, close_date, open_price, high_price, low_price, close_price)
+VALUES (1, '2005-11-01', 81.85, 82.15, 81.29, 81.59),
+(1, '2005-11-02', 81.2, 81.89, 80.64, 81.06),
+(1, '2005-11-03', 81.55, 83.03, 81.31, 82.87),
+(1, '2005-11-04', 82.91, 83.3, 82.65, 83),
+(1, '2005-11-07', 83.1, 83.85, 83.07, 83.61),
+(1, '2005-11-08', 83.41, 83.9, 83.11, 83.15),
+(1, '2005-11-09', 82.71, 83.33, 82.49, 82.84),
+(1, '2005-11-10', 82.7, 84.3, 82.3, 83.99),
+(1, '2005-11-11', 84.2, 84.84, 84.15, 84.55),
+(1, '2005-11-14', 84.25, 85, 84.11, 84.36),
+(1, '2005-11-15', 84.03, 85.9, 84.03, 85.53),
+(1, '2005-11-16', 85.45, 86.58, 85.39, 86.54),
+(1, '2005-11-17', 86.18, 86.98, 85.76, 86.89),
+(1, '2005-11-18', 88, 88, 87.17, 87.77),
+(1, '2005-11-21', 87.6, 87.87, 87.01, 87.29);
+
 INSERT INTO "_test_data"(instrument_id, close_date, open_price, close_price, high_price, low_price, quantity, turnover, num_of_trades, mcap) VALUES (0, '2016-01-04', 149.7, 147.1, 149.9, 146.1, 1690284, 249239212.65, 3337, 75143493516);
 INSERT INTO "_test_data"(instrument_id, close_date, open_price, close_price, high_price, low_price, quantity, turnover, num_of_trades, mcap) VALUES (0, '2016-01-05', 147, 146.4, 148.3, 146.2, 1091112, 160576005.31, 1999, 74836785379.2);
 INSERT INTO "_test_data"(instrument_id, close_date, open_price, close_price, high_price, low_price, quantity, turnover, num_of_trades, mcap) VALUES (0, '2016-01-07', 144.9, 142.7, 144.9, 141.2, 2739688, 390563795.2, 4483, 72894300512.8);

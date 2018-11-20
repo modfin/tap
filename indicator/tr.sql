@@ -26,10 +26,10 @@ BEGIN
       today.close_date,
       today.close_price,
       today.high_price-today.low_price as a,
-      abs(today.high_price - yesterday.close_price) b,
-      abs(today.low_price - yesterday.close_price) c
+      coalesce(abs(today.high_price - yesterday.close_price), 0) b,
+      coalesce(abs(today.low_price - yesterday.close_price), 0) c
     FROM prices today
-      INNER JOIN
+      LEFT JOIN
       LATERAL (
         SELECT yesterday.close_price FROM prices yesterday
         WHERE yesterday.close_date < today.close_date

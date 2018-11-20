@@ -133,6 +133,24 @@ func GetEMA(interval int, from, to time.Time) ([]OneVal, error){
 	return ema, err
 }
 
+func GetWilders(interval int, from, to time.Time) ([]OneVal, error){
+	dbb, err := GetDB()
+
+	if err != nil{
+		return nil, err
+	}
+
+
+	q := `
+  	SELECT close_date, wilders float1 FROM tap_wilders($1, 0, ($2 :: DATE ) :: DATE, $3)
+  `
+
+	var ema []OneVal
+	err = dbb.Select(&ema, q, interval, from, to)
+	return ema, err
+}
+
+
 func GetBBands(interval int, factor int, from, to time.Time) ([]ThreeVal, error){
 	dbb, err := GetDB()
 
@@ -149,3 +167,75 @@ func GetBBands(interval int, factor int, from, to time.Time) ([]ThreeVal, error)
 	err = dbb.Select(&bands, q, interval, factor, from, to)
 	return bands, err
 }
+
+
+func GetCCI(interval int, from, to time.Time) ([]OneVal, error){
+	dbb, err := GetDB()
+
+	if err != nil{
+		return nil, err
+	}
+
+
+	q := `
+  	SELECT close_date, cci float1 FROM tap_cci( $1, 0, $2, $3)
+  `
+
+	var cci []OneVal
+	err = dbb.Select(&cci, q, interval, from, to)
+	return cci, err
+}
+
+
+func GetATR(interval int, from, to time.Time) ([]OneVal, error){
+	dbb, err := GetDB()
+
+	if err != nil{
+		return nil, err
+	}
+
+
+	q := `
+  	SELECT close_date, atr float1 FROM tap_atr( $1, 0, $2, $3)
+  `
+
+	var atr []OneVal
+	err = dbb.Select(&atr, q, interval, from, to)
+	return atr, err
+}
+
+
+
+func GetTR(from, to time.Time) ([]OneVal, error){
+	dbb, err := GetDB()
+
+	if err != nil{
+		return nil, err
+	}
+
+	q := `
+  	SELECT close_date, tr float1 FROM tap_tr( 0, $1, $2)
+  `
+
+	var atr []OneVal
+	err = dbb.Select(&atr, q, from, to)
+	return atr, err
+}
+
+func GetNATR(interval int, from, to time.Time) ([]OneVal, error){
+	dbb, err := GetDB()
+
+	if err != nil{
+		return nil, err
+	}
+
+
+	q := `
+  	SELECT close_date, atr float1 FROM tap_natr( $1, 0, $2, $3)
+  `
+
+	var atr []OneVal
+	err = dbb.Select(&atr, q, interval, from, to)
+	return atr, err
+}
+

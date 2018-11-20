@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION tap_aroon(_interval INT, _stock_id BIGINT, _from DATE, _to DATE)
+CREATE OR REPLACE FUNCTION tap_aroon(_interval INT, _instrument_id BIGINT, _from DATE, _to DATE)
   RETURNS TABLE("close_date" DATE, up DOUBLE PRECISION, down DOUBLE PRECISION)
 LANGUAGE plpgsql
 AS $$
@@ -8,7 +8,7 @@ BEGIN
 
   WITH hl AS (
       SELECT m.close_date, m.high_price, m.low_price
-      FROM tap_price_data_interval(_stock_id,  _from - _interval*2, _to) m
+      FROM tap_price_data_interval(_instrument_id,  _from - _interval*2, _to) m
   )
   SELECT
     dd.close_date,

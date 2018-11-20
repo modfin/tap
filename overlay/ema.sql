@@ -3,21 +3,14 @@ CREATE OR REPLACE FUNCTION tap_ema(_interval INT, _instrument_id BIGINT, _from D
 LANGUAGE plpgsql
 AS $$
 DECLARE
-  _start DATE;
 BEGIN
-
-  SELECT aa.close_date
-  INTO _start
-  FROM tap_price_data_limit(_instrument_id, _from - 1, 2 * _interval) aa
-  ORDER BY aa.close_date DESC
-  LIMIT 1;
 
   RETURN QUERY
   WITH RECURSIVE prices AS (
       SELECT
         aph.close_date  dt,
         aph.close_price closeprice
-      FROM tap_price_data_interval(_instrument_id, _start, _to) aph
+      FROM tap_price_data_interval(_instrument_id, _from, _to) aph
       ORDER BY aph.close_date
   ),
       t AS (

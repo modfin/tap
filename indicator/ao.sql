@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION tap_ao(_stock_id BIGINT, _from DATE, _to DATE)
+CREATE OR REPLACE FUNCTION tap_ao(_instrument_id BIGINT, _from DATE, _to DATE)
   RETURNS TABLE("close_date" DATE, ao DOUBLE PRECISION)
 LANGUAGE plpgsql
 AS $$
@@ -8,7 +8,7 @@ BEGIN
 
   WITH hl AS (
       SELECT m.close_date, m.medprice
-      FROM tap_medprice(_stock_id, _from - 64, _to) m
+      FROM tap_medprice(_instrument_id, _from - 64, _to) m
   )
   SELECT
     dd.close_date,
